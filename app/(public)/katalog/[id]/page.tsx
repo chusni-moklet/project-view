@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
-import { Eye, Heart, MapPin, Users, Github, Globe, GraduationCap } from 'lucide-react'
+import { Eye, Heart, MapPin, Users, GitBranch, Globe, GraduationCap } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { formatNumber } from '@/lib/utils'
 import LikeButton from '@/components/public/LikeButton'
@@ -115,7 +115,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             {project.github_url && (
               <a href={project.github_url} target="_blank" rel="noopener noreferrer"
                 className="flex items-center gap-2 w-full px-4 py-2 bg-gray-900 text-white rounded-lg text-sm hover:bg-gray-800 transition-colors">
-                <Github className="h-4 w-4" /> GitHub
+                <GitBranch className="h-4 w-4" /> GitHub
               </a>
             )}
           </div>
