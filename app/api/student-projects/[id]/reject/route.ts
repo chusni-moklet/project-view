@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { createClient as createAdmin } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -13,9 +14,22 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   }
 
   const body = await req.json()
-  const { data, error } = await supabase
+  if (!body.note?.trim()) {
+    return NextResponse.json({ error: 'Catatan penolakan wajib diisi' }, { status: 400 })
+  }
+
+  const admin = createAdmin(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+
+  const { data, error } = await admin
     .from('student_projects')
-    .update({ status: 'rejected', rejection_note: body.note || '' })
+    .update({
+      status: 'rejected',
+      is_published: false,
+      rejection_note: body.note,
+    })
     .eq('id', id)
     .select()
     .single()

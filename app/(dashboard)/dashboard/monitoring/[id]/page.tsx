@@ -4,7 +4,6 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import FeedbackForm from '@/components/dashboard/FeedbackForm'
-import PublishToggle from '@/components/dashboard/PublishToggle'
 import ProjectReviewActions from '@/components/dashboard/ProjectReviewActions'
 
 const statusLabels: Record<string, string> = {
@@ -49,8 +48,8 @@ export default async function MonitoringDetailPage({ params }: { params: Promise
           </div>
         </div>
         <div className="flex flex-col gap-2 items-end">
-          {sp.status === 'approved' && (
-            <PublishToggle projectId={id} isPublished={sp.is_published} />
+          {sp.status === 'approved' && sp.is_published && (
+            <span className="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full font-medium">✅ Tampil di Katalog</span>
           )}
         </div>
       </div>
