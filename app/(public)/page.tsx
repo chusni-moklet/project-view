@@ -5,14 +5,25 @@ import ProjectCard from '@/components/public/ProjectCard'
 async function getWeeklyRanking() {
   const supabase = await createClient()
   const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
-  const { data } = await supabase
+
+  // Coba ambil project minggu ini dulu
+  const { data: weekly } = await supabase
     .from('student_projects')
     .select(`*, student:users(name), project:projects(title, description), screenshots:project_screenshots(url, is_primary)`)
     .eq('is_published', true)
     .gte('published_at', sevenDaysAgo)
     .order('likes_count', { ascending: false })
     .limit(8)
-  return (data || [])
+
+  // Kalau kosong, ambil semua project published
+  const { data: all } = weekly && weekly.length > 0 ? { data: weekly } : await supabase
+    .from('student_projects')
+    .select(`*, student:users(name), project:projects(title, description), screenshots:project_screenshots(url, is_primary)`)
+    .eq('is_published', true)
+    .order('likes_count', { ascending: false })
+    .limit(8)
+
+  return (all || [])
     .map(p => ({ ...p, ranking_score: (p.likes_count * 3) + p.views }))
     .sort((a, b) => b.ranking_score - a.ranking_score)
     .map((p, i) => ({ ...p, rank: i + 1 }))

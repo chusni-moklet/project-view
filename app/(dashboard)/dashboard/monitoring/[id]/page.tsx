@@ -54,9 +54,9 @@ export default async function MonitoringDetailPage({ params }: { params: Promise
         </div>
       </div>
 
-      {/* Review actions — hanya tampil kalau status submitted */}
-      {sp.status === 'submitted' && (
-        <ProjectReviewActions projectId={id} />
+      {/* Review actions — tampil untuk semua status kecuali approved */}
+      {!['approved'].includes(sp.status) && (
+        <ProjectReviewActions projectId={id} currentStatus={sp.status} />
       )}
 
       {sp.rejection_note && (

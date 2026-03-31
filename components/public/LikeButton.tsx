@@ -40,10 +40,10 @@ export default function LikeButton({ projectId, initialLiked, initialCount }: Pr
       onClick={handleLike}
       disabled={loading}
       variant={liked ? 'default' : 'outline'}
-      className={`w-full gap-2 ${liked ? 'bg-red-500 hover:bg-red-600 border-red-500' : 'border-red-200 text-red-500 hover:bg-red-50'}`}
+      className={`w-full gap-2 ${liked ? 'bg-pink-500 hover:bg-pink-600 border-pink-500' : 'border-pink-200 text-pink-500 hover:bg-pink-50'}`}
     >
       <Heart className={`h-4 w-4 ${liked ? 'fill-white' : ''}`} />
-      {liked ? 'Disukai' : 'Suka'} · {formatNumber(count)}
+      {liked ? '❤️ Disukai' : '🤍 Suka'} · {formatNumber(count)}
     </Button>
   )
 }
