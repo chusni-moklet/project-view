@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import FeedbackForm from '@/components/dashboard/FeedbackForm'
 import ProjectReviewActions from '@/components/dashboard/ProjectReviewActions'
+import ProjectActions from '@/components/dashboard/ProjectActions'
 
 const statusLabels: Record<string, string> = {
   draft: 'Draft', in_progress: 'Dalam Proses', submitted: 'Menunggu Review',
@@ -51,6 +52,11 @@ export default async function MonitoringDetailPage({ params }: { params: Promise
           {sp.status === 'approved' && sp.is_published && (
             <span className="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full font-medium">✅ Tampil di Katalog</span>
           )}
+          <ProjectActions
+            projectId={id}
+            isPublished={sp.is_published}
+            projectTitle={sp.project?.title || ''}
+          />
         </div>
       </div>
 

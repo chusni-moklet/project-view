@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
+import ProjectActions from '@/components/dashboard/ProjectActions'
 
 const statusLabels: Record<string, string> = {
   draft: 'Draft', in_progress: 'Dalam Proses', submitted: 'Diajukan', approved: 'Disetujui', rejected: 'Ditolak',
@@ -39,10 +40,10 @@ export default async function MonitoringPage() {
           return (
             <Card key={p.id} className={isSubmitted ? 'border-yellow-300' : ''}>
               <CardContent className="p-4">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1 space-y-2">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1 space-y-2 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="font-medium">{p.project?.title}</h3>
+                      <h3 className="font-medium truncate">{p.project?.title}</h3>
                       <Badge variant={isSubmitted ? 'warning' : 'secondary'}>{statusLabels[p.status] || p.status}</Badge>
                       {p.is_published && <Badge variant="success">Publik</Badge>}
                       {p.mata_pelajaran && <Badge variant="secondary">{p.mata_pelajaran.nama}</Badge>}
@@ -55,11 +56,18 @@ export default async function MonitoringPage() {
                       <Progress value={maxProgress} />
                     </div>
                   </div>
-                  <Link href={`/dashboard/monitoring/${p.id}`}>
-                    <Button variant={isSubmitted ? 'default' : 'outline'} size="sm">
-                      {isSubmitted ? 'Review' : 'Detail'}
-                    </Button>
-                  </Link>
+                  <div className="flex items-center gap-1 flex-shrink-0">
+                    <ProjectActions
+                      projectId={p.id}
+                      isPublished={p.is_published}
+                      projectTitle={p.project?.title || ''}
+                    />
+                    <Link href={`/dashboard/monitoring/${p.id}`}>
+                      <Button variant={isSubmitted ? 'default' : 'outline'} size="sm">
+                        {isSubmitted ? 'Review' : 'Detail'}
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </CardContent>
             </Card>
