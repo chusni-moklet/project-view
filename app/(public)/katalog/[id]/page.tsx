@@ -76,6 +76,24 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           <div>
             <h1 className="text-2xl md:text-3xl font-bold text-gray-900 leading-tight">{project.project?.title}</h1>
             <p className="text-gray-500 leading-relaxed mt-3 text-sm md:text-base">{project.project?.description}</p>
+
+            {/* Tombol Demo & GitHub langsung di bawah deskripsi */}
+            {(project.demo_url || project.github_url) && (
+              <div className="flex flex-wrap gap-2 mt-4">
+                {project.demo_url && (
+                  <a href={project.demo_url} target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-violet-500 to-purple-600 text-white rounded-2xl text-sm font-semibold hover:shadow-lg hover:shadow-purple-200 transition-all">
+                    <Globe className="h-4 w-4" /> Demo Project
+                  </a>
+                )}
+                {project.github_url && (
+                  <a href={project.github_url} target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white rounded-2xl text-sm font-semibold hover:bg-gray-800 transition-colors">
+                    <GitBranch className="h-4 w-4" /> GitHub
+                  </a>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Screenshots gallery */}
@@ -158,22 +176,6 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                 <span className="text-xs text-pink-400">suka</span>
               </div>
             </div>
-          </div>
-
-          {/* Links */}
-          <div className="space-y-2">
-            {project.demo_url && (
-              <a href={project.demo_url} target="_blank" rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-gradient-to-r from-violet-500 to-purple-600 text-white rounded-2xl text-sm font-semibold hover:shadow-lg hover:shadow-purple-200 transition-all">
-                <Globe className="h-4 w-4" /> Demo Project
-              </a>
-            )}
-            {project.github_url && (
-              <a href={project.github_url} target="_blank" rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-gray-900 text-white rounded-2xl text-sm font-semibold hover:bg-gray-800 transition-colors">
-                <GitBranch className="h-4 w-4" /> GitHub
-              </a>
-            )}
           </div>
 
           {/* Like */}
